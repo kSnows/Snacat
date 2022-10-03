@@ -1,20 +1,18 @@
 body {
-    background: #b2a898;
+    background: #b89c8f;
     color: #281e19;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-
 }
 
 h1 {
     font-family: fantasy;
-    color:#5b453b;
+    color: #5a433e;
     font-size: 50px;
     font-variant: small-caps;
-    text-decoration: line-through;
-    border: 3px solid #8c6b5e;
+    border: 3px solid #6c554a;
     border-radius: 25px;
-    background-color: #dfc0b39f;
+    background-color: #f4dabda7;
     margin: 25px;
 }
 
@@ -24,4 +22,13 @@ h1 {
     position: absolute;
     top: 10px;
     right: 50px;
+}
+
+#game {
+    border: #463730 solid 0.5pc;
+    border-radius: 1pc;
+}
+
+#footnote {
+    font-size: 12px;
 }

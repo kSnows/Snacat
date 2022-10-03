@@ -9,33 +9,38 @@ let cat = [{
 let snack;
 let cellWidth = canvas.width / cols;
 let cellHeight = canvas.height / rows;
-let difficulty;
+let gameSpeed;
 let direction = 'right';
 let snackEaten = false;
 let score = 0;
+let highscore = 0;
 let catImg = document.getElementById('catImg');
+let highscoreText = document.getElementById('highscoreText');
 
 spawnSnack();
-difficulty = setInterval(gameLoop, 250)
+gameSpeed = setInterval(gameLoop, 250)
 document.addEventListener('keydown', keyDown)
 draw();
 
 
 function draw() {
     //Background
-    ctx.fillStyle = 'lightgrey';
+    ctx.fillStyle = '#463730';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //Cat
     ctx.drawImage(catImg, cat[0].x * cellWidth, cat[0].y * cellHeight, cellWidth, cellHeight);
-    ctx.fillStyle = "#5b453b";
+    ctx.fillStyle = "#ab7b64";
     for (let i = 1; i < cat.length; i++) {
-        addPixel(cat[i].x, cat[i].y);
+        drawElement(cat[i].x, cat[i].y);
     }
 
     //Snack
-    ctx.fillStyle = '#ccac0c';
-    addPixel(snack.x, snack.y);
+    ctx.fillStyle = '#d2ba64';
+    ctx.beginPath();
+    ctx.arc((snack.x * cellWidth + cellWidth / 2), (snack.y * cellHeight + cellHeight / 2), cellWidth / 2, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
 
     requestAnimationFrame(draw);
 }
@@ -52,7 +57,6 @@ function checkGameOver() {
     ) {
         resetGame();
     }
-
 }
 
 function spawnSnack() {
@@ -64,8 +68,7 @@ function spawnSnack() {
         spawnSnack();
 }
 
-
-function addPixel(x, y) {
+function drawElement(x, y) {
     ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
 }
 
@@ -105,16 +108,13 @@ function gameLoop() {
         snackEaten = true;
         score++;
         spawnSnack();
+        increaseDifficulty();
     }
+}
 
-    if (score >= 10 && score < 20) {
-        clearInterval(difficulty);
-        difficulty = setInterval(gameLoop, 200);
-    }
-    else if (score >= 20 && score < 30) {
-        clearInterval(difficulty);
-        difficulty = setInterval(gameLoop, 150);
-    }
+function increaseDifficulty() {
+    clearInterval(gameSpeed);
+    gameSpeed = setInterval(gameLoop, 250 - score * 3);
 }
 
 function keyDown(k) {
@@ -145,12 +145,14 @@ function keyDown(k) {
 }
 
 function resetGame() {
-    if (score > 0)
-        alert('You scored ' + score + ' point(s)');
+    if (score > highscore) {
+        highscore = score;
+        highscoreText.innerHTML = 'Last Highscore: ' + highscore;
+    }
     cat = [{ x: 1, y: 1 }];
     direction = 'right';
     score = 0;
     spawnSnack();
-    clearInterval(difficulty);
-    difficulty = setInterval(gameLoop, 250);
+    clearInterval(gameSpeed);
+    gameSpeed = setInterval(gameLoop, 250);
 }
