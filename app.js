@@ -120,25 +120,25 @@ function increaseDifficulty() {
 function keyDown(k) {
     if (k.keyCode == 37) {
         if (cat.length > 1 && direction == 'right')
-            resetGame();
+            return;
         else
             direction = 'left';
     }
     if (k.keyCode == 38) {
         if (cat.length > 1 && direction == 'down')
-            resetGame();
+            return;
         else
             direction = 'up';
     }
     if (k.keyCode == 39) {
         if (cat.length > 1 && direction == 'left')
-            resetGame();
+            return;
         else
             direction = 'right';
     }
     if (k.keyCode == 40) {
         if (cat.length > 1 && direction == 'up')
-            resetGame();
+            return;
         else
             direction = 'down';
     }
